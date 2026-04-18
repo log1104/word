@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('posts', ({ data }) => !data.draft);
+const categoryMap = new Map<string, number>();
+
+for (const post of posts) {
+	const cat = post.data.category;
+	categoryMap.set(cat, (categoryMap.get(cat) ?? 0) + 1);
+}
+
+const categories = [...categoryMap.entries()].sort((a, b) => b[1] - a[1]);
+---
+
+<BaseLayout title="Categories | Word" description="Browse posts by category">
+	<section>
+		<h1 class="text-4xl font-bold mb-8">Categories</h1>
+		{categories.length > 0 ? (
+			<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+				{categories.map(([category, count]) => (
+					<a
+						href={`/categories/${category}`}
+						class="block rounded-lg border border-gray-200 dark:border-gray-800 p-6 hover:shadow-lg hover:border-primary transition-all"
+					>
+						<h2 class="text-lg font-bold mb-1 capitalize">{category}</h2>
+						<p class="text-sm text-gray-500 dark:text-gray-400">{count} post{count !== 1 ? 's' : ''}</p>
+					</a>
+				))}
+			</div>
+		) : (
+			<p class="text-gray-500 dark:text-gray-400">No categories yet.</p>
+		)}
+	</section>
+</BaseLayout>

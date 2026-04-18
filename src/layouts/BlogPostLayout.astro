@@ -1,0 +1,42 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import TagList from '../components/TagList.astro';
+
+interface Props {
+	title: string;
+	description: string;
+	pubDate: Date;
+	updatedDate?: Date;
+	heroImage?: string;
+	tags?: string[];
+	category?: string;
+}
+
+const { title, description, pubDate, updatedDate, heroImage, tags, category } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} image={heroImage} pubDate={pubDate}>
+	<article>
+		{heroImage && <img src={heroImage} alt={title} class="rounded-lg w-full mb-6" />}
+		<header class="mb-8">
+			<p class="text-sm text-gray-500 dark:text-gray-400 mb-2">
+				{category && (
+					<a href={`/categories/${category}`} class="text-primary hover:underline">{category}</a>
+				)}
+				&middot;{' '}
+				<time datetime={pubDate.toISOString()}>
+					{pubDate.toLocaleDateString('en-GB')}
+				</time>
+				{updatedDate && (
+					<> (Updated: {updatedDate.toLocaleDateString('en-GB')})</>
+				)}
+			</p>
+			<h1 class="text-4xl font-bold mb-4">{title}</h1>
+			<p class="text-lg text-gray-600 dark:text-gray-400">{description}</p>
+			{tags && tags.length > 0 && <TagList tags={tags} />}
+		</header>
+		<div class="prose prose-lg dark:prose-invert max-w-none">
+			<slot />
+		</div>
+	</article>
+</BaseLayout>

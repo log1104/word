@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+	const posts = await getCollection('posts', ({ data }) => !data.draft);
+	const categoryMap = new Map<string, typeof posts>();
+
+	for (const post of posts) {
+		const cat = post.data.category;
+		const existing = categoryMap.get(cat) ?? [];
+		categoryMap.set(cat, [...existing, post]);
+	}
+
+	return [...categoryMap.entries()].map(([category, catPosts]) => ({
+		params: { category },
+		props: { category, posts: catPosts },
+	}));
+}
+
+const { category, posts: catPosts } = Astro.props;
+const sortedPosts = catPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout title={`${category} | Word`} description={`All posts in "${category}"`}>
+	<section>
+		<div class="mb-8">
+			<a href="/categories" class="text-sm text-primary hover:underline">&larr; All categories</a>
+			<h1 class="text-4xl font-bold mt-2 capitalize">{category}</h1>
+			<p class="text-gray-500 dark:text-gray-400 mt-2">{sortedPosts.length} post{sortedPosts.length !== 1 ? 's' : ''}</p>
+		</div>
+		<div class="grid gap-6">
+			{sortedPosts.map((post) => (
+				<PostCard post={post} />
+			))}
+		</div>
+	</section>
+</BaseLayout>
