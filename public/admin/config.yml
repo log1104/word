@@ -2,8 +2,6 @@ backend:
   name: github
   branch: main
   repo: log1104/word
-  auth_type: pkce
-  app_id: Ov23livZGmk1uCWYasyO
 
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
