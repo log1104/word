@@ -1,63 +1,67 @@
-# Astro Starter Kit: Blog
+# Word
 
-```sh
-npm create astro@latest -- --template blog
+A static blog at [word.247base.uk](https://word.247base.uk), built with Astro v6, Tailwind CSS v4, and Sveltia CMS. Deployed on Cloudflare Pages.
+
+## Tech Stack
+
+- **Astro v6** — Static site generation with Content Layer API
+- **Tailwind CSS v4** — Styling via Vite plugin
+- **Sveltia CMS** — Git-based CMS at `/admin`
+- **Cloudflare Pages** — Hosting and deployment
+
+## Project Structure
+
+```
+src/
+├── components/     PostCard, TagList, CategoryList, Header, Footer, SEO
+├── content/
+│   └── posts/      Blog posts (Markdown)
+├── layouts/        BaseLayout, BlogPostLayout
+├── pages/
+│   ├── blog/       Blog listing + individual posts
+│   ├── tags/       Tag index + filtered views
+│   ├── categories/ Category index + filtered views
+│   ├── about.astro
+│   ├── index.astro
+│   └── rss.xml.ts
+└── styles/         global.css (Tailwind v4)
+public/
+├── admin/          Sveltia CMS (index.html + config.yml)
+└── images/uploads/ Blog images
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Commands
 
-Features:
+| Command | Action |
+|:--|:--|
+| `npm install` | Install dependencies |
+| `npm run dev` | Start dev server at `localhost:4321` |
+| `npm run build` | Build production site to `./dist/` |
+| `npm run preview` | Preview build locally |
+| `npx wrangler pages deploy dist --project-name word` | Deploy to Cloudflare Pages |
 
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and Open Graph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
+## Content Management
 
-## 🚀 Project Structure
+Visit `/admin/` to open Sveltia CMS. Log in with GitHub to create and edit posts. Changes are committed to the repo and auto-deployed via Cloudflare Pages.
 
-Inside of your Astro project, you'll see the following folders and files:
+## Content Schema
 
-```text
-├── public/
-├── src/
-│   ├── assets/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
-├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
-```
+Posts are defined in `src/content.config.ts` with these frontmatter fields:
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+| Field | Type | Required | Default |
+|:--|:--|:--|:--|
+| `title` | string | Yes | — |
+| `description` | string | Yes | — |
+| `pubDate` | date | Yes | — |
+| `updatedDate` | date | No | — |
+| `heroImage` | string | No | — |
+| `category` | string | No | `uncategorized` |
+| `tags` | string[] | No | `[]` |
+| `draft` | boolean | No | `false` |
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## Deployment
 
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
+Cloudflare Pages is linked to the GitHub repo. Pushes to `main` trigger automatic builds. Build settings:
 
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
-
-## Credit
-
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+- **Build command**: `npm run build`
+- **Build output directory**: `dist`
