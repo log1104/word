@@ -6,12 +6,15 @@ backend:
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
 
+site_url: https://word.247base.uk
+
 collections:
   - name: "posts"
     label: "Blog Posts"
     folder: "src/content/posts"
     create: true
     slug: "{{slug}}"
+    preview_path: "blog/{{slug}}"
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Description", name: "description", widget: "text" }
