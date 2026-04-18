@@ -16,8 +16,6 @@ collections:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Description", name: "description", widget: "text" }
       - { label: "Publish Date", name: "pubDate", widget: "datetime" }
-      - { label: "Updated Date", name: "updatedDate", widget: "datetime", required: false }
-      - { label: "Hero Image", name: "heroImage", widget: "image", required: false }
       - { label: "Category", name: "category", widget: "string", default: "uncategorized" }
       - { label: "Tags", name: "tags", widget: "list", allow_add: true }
       - { label: "Draft", name: "draft", widget: "boolean", default: false }
