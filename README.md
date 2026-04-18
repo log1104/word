@@ -65,6 +65,15 @@ Posts are defined in `src/content.config.ts` with these frontmatter fields:
 | `tags` | string[] | No | `[]` |
 | `draft` | boolean | No | `false` |
 
+## Bible Study App Integration
+
+This blog is integrated with the **Berean Bible Study Web App**. 
+Study sessions can be published directly to this blog from the chat interface.
+
+- **Endpoint**: GitHub REST API (Content PUT)
+- **Path**: `src/content/posts/study-YYYY-MM-DD-xxxx.md`
+- **Automation**: Build and deployment are handled by Cloudflare Pages upon receipt of the new commit.
+
 ## Deployment
 
 Cloudflare Pages is linked to the GitHub repo. Pushes to `main` trigger automatic builds. Build settings:

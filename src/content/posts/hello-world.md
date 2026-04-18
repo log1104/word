@@ -2,7 +2,7 @@
 title: Word Blog Intro plus
 description: Welcome to the Word blog.
 pubDate: 2026-04-18
-updatedDate: ''
+updatedDate:
 category: general
 tags:
   - welcome
