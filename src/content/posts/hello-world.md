@@ -1,5 +1,5 @@
 ---
-title: Word Blog Intro
+title: Word Blog Intro plus
 description: Welcome to the Word blog.
 pubDate: 2026-04-18
 updatedDate: ''
