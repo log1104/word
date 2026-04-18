@@ -3,15 +3,23 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
 const posts = await getCollection('posts', ({ data }) => !data.draft);
-const tagMap = new Map<string, number>();
+const tagMap = new Map<string, { display: string; count: number }>();
 
 for (const post of posts) {
 	for (const tag of post.data.tags) {
-		tagMap.set(tag, (tagMap.get(tag) ?? 0) + 1);
+		const slug = tag.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+		const existing = tagMap.get(slug);
+		if (existing) {
+			existing.count += 1;
+		} else {
+			tagMap.set(slug, { display: tag, count: 1 });
+		}
 	}
 }
 
-const tags = [...tagMap.entries()].sort((a, b) => b[1] - a[1]);
+const tags = [...tagMap.entries()]
+	.map(([slug, data]) => ({ slug, ...data }))
+	.sort((a, b) => b.count - a.count);
 ---
 
 <BaseLayout title="Tags | Word" description="Browse posts by tag">
@@ -19,12 +27,12 @@ const tags = [...tagMap.entries()].sort((a, b) => b[1] - a[1]);
 		<h1 class="text-4xl font-bold mb-8">Tags</h1>
 		{tags.length > 0 ? (
 			<div class="flex flex-wrap gap-3">
-				{tags.map(([tag, count]) => (
+				{tags.map(({ slug, display, count }) => (
 					<a
-						href={`/tags/${tag}`}
+						href={`/tags/${slug}`}
 						class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-colors font-medium"
 					>
-						#{tag}
+						#{display}
 						<span class="text-xs opacity-75">({count})</span>
 					</a>
 				))}

@@ -5,18 +5,23 @@ import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
 	const posts = await getCollection('posts', ({ data }) => !data.draft);
-	const tagMap = new Map<string, typeof posts>();
+	const tagMap = new Map<string, { display: string; posts: typeof posts }>();
 
 	for (const post of posts) {
 		for (const tag of post.data.tags) {
-			const existing = tagMap.get(tag) ?? [];
-			tagMap.set(tag, [...existing, post]);
+			const slug = tag.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+			const existing = tagMap.get(slug);
+			if (existing) {
+				existing.posts = [...existing.posts, post];
+			} else {
+				tagMap.set(slug, { display: tag, posts: [post] });
+			}
 		}
 	}
 
-	return [...tagMap.entries()].map(([tag, tagPosts]) => ({
-		params: { tag },
-		props: { tag, posts: tagPosts },
+	return [...tagMap.entries()].map(([slug, { display, posts: tagPosts }]) => ({
+		params: { tag: slug },
+		props: { tag: display, posts: tagPosts },
 	}));
 }
 
