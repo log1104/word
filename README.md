@@ -42,7 +42,13 @@ public/
 
 ## Content Management
 
-Visit `/admin/` to open Sveltia CMS. Log in with GitHub to create and edit posts. Changes are committed to the repo and auto-deployed via Cloudflare Pages.
+Visit `/admin/` to open Sveltia CMS. Log in with a GitHub Personal Access Token:
+
+1. Generate a token at https://github.com/settings/tokens/new
+2. Give it the **repo** scope
+3. Paste the token into the Sveltia CMS login screen
+
+Changes are committed to the repo and auto-deployed via Cloudflare Pages.
 
 ## Content Schema
 
