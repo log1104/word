@@ -1,9 +1,7 @@
 ---
 title: another test
 description: somethubg
-pubDate: 2026-04-18T23:09:00
-updatedDate: ''
-heroImage: ''
+pubDate: 2026-04-18
 category: uncategorized
 tags:
   - word
