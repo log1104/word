@@ -1,9 +1,12 @@
 ---
-title: "Hello World"
-description: "Welcome to the Word blog."
+title: Word Blog Intro
+description: Welcome to the Word blog.
 pubDate: 2026-04-18
-tags: ["welcome", "first-post"]
-category: "general"
+updatedDate: ''
+category: general
+tags:
+  - welcome
+  - first-post
 draft: false
 ---
 
