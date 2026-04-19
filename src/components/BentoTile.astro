@@ -1,0 +1,111 @@
+---
+interface Props {
+	post: {
+		id: string;
+		data: {
+			title: string;
+			description: string;
+			pubDate: Date;
+			heroImage?: string;
+			tags: string[];
+			category: string;
+		};
+	};
+	variant?: 'hero' | 'tall' | 'wide' | 'standard';
+}
+
+const { post, variant = 'standard' } = Astro.props;
+
+// Calculate reading time (roughly 200 words per minute)
+// Since we don't have the body here, we'll just show the category or a small detail
+const categoryColors: Record<string, string> = {
+	study: 'from-blue-500/20 to-indigo-500/20',
+	news: 'from-emerald-500/20 to-teal-500/20',
+	reflection: 'from-purple-500/20 to-pink-500/20',
+	uncategorized: 'from-gray-500/20 to-slate-500/20'
+};
+
+const bgGradient = categoryColors[post.data.category] || categoryColors.uncategorized;
+
+const cardClasses = {
+	hero: 'col-span-1 sm:col-span-2 row-span-2 min-h-[400px]',
+	tall: 'col-span-1 row-span-2 min-h-[400px]',
+	wide: 'col-span-1 sm:col-span-2 row-span-1 min-h-[200px]',
+	standard: 'col-span-1 row-span-1 min-h-[200px]'
+};
+---
+
+<article class:list={[
+	'group relative overflow-hidden rounded-[--radius-bento] border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary/5',
+	cardClasses[variant]
+]}>
+	<a href={`/blog/${post.id}/`} class="flex flex-col h-full">
+		{post.data.heroImage ? (
+			<div class:list={[
+				'relative overflow-hidden',
+				variant === 'hero' || variant === 'tall' ? 'h-full' : 'h-48'
+			]}>
+				<img 
+					src={post.data.heroImage} 
+					alt={post.data.title} 
+					class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+				/>
+				<div class="absolute inset-0 bg-linear-to-t from-gray-950/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity"></div>
+			</div>
+		) : (
+			<div class:list={[
+				'absolute inset-0 bg-linear-to-br transition-opacity duration-700 group-hover:opacity-80',
+				bgGradient
+			]}></div>
+		)}
+
+		<div class:list={[
+			'relative z-10 p-6 flex flex-col',
+			variant === 'hero' ? 'justify-end h-full text-white' : 'h-full',
+			variant === 'wide' ? 'sm:flex-row sm:items-center sm:gap-6' : ''
+		]}>
+			<header class:list={[
+				variant === 'wide' ? 'sm:flex-1' : ''
+			]}>
+				<div class="flex items-center gap-2 mb-3">
+					<span class:list={[
+						'px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase',
+						variant === 'hero' ? 'bg-white/20 backdrop-blur-md text-white' : 'bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary-light'
+					]}>
+						{post.data.category}
+					</span>
+					<time 
+						datetime={post.data.pubDate.toISOString()}
+						class:list={['text-xs', variant === 'hero' ? 'text-gray-200' : 'text-gray-500 dark:text-gray-400']}
+					>
+						{post.data.pubDate.toLocaleDateString('en-GB')}
+					</time>
+				</div>
+				
+				<h2 class:list={[
+					'font-bold leading-tight group-hover:text-primary transition-colors',
+					variant === 'hero' ? 'text-3xl sm:text-4xl group-hover:text-white' : 'text-xl sm:text-2xl'
+				]}>
+					{post.data.title}
+				</h2>
+			</header>
+
+			{((variant === 'hero' || variant === 'wide') && post.data.description) && (
+				<p class:list={[
+					'mt-3 line-clamp-2 text-sm',
+					variant === 'hero' ? 'text-gray-200' : 'text-gray-600 dark:text-gray-400',
+					variant === 'wide' ? 'sm:mt-0 sm:flex-1' : ''
+				]}>
+					{post.data.description}
+				</p>
+			)}
+
+			<div class="mt-auto pt-4 flex items-center justify-between opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+				<span class:list={['text-sm font-medium', variant === 'hero' ? 'text-white' : 'text-primary']}>
+					Read More
+				</span>
+				<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class:list={[variant === 'hero' ? 'text-white' : 'text-primary']}><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+			</div>
+		</div>
+	</a>
+</article>

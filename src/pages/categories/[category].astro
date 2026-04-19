@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import PostCard from '../../components/PostCard.astro';
+import BentoGrid from '../../components/BentoGrid.astro';
 import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -25,15 +25,11 @@ const sortedPosts = catPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pu
 
 <BaseLayout title={`${category} | Word`} description={`All posts in "${category}"`}>
 	<section>
-		<div class="mb-8">
-			<a href="/categories" class="text-sm text-primary hover:underline">&larr; All categories</a>
+		<div class="mb-8 border-b border-gray-100 dark:border-gray-800 pb-8">
+			<a href="/categories" class="text-sm font-medium text-gray-500 hover:text-primary transition-colors">&larr; All categories</a>
 			<h1 class="text-4xl font-bold mt-2 capitalize">{category}</h1>
-			<p class="text-gray-500 dark:text-gray-400 mt-2">{sortedPosts.length} post{sortedPosts.length !== 1 ? 's' : ''}</p>
+			<p class="text-gray-500 dark:text-gray-400 mt-2">{sortedPosts.length} post{sortedPosts.length !== 1 ? 's' : ''} in this category.</p>
 		</div>
-		<div class="grid gap-6">
-			{sortedPosts.map((post) => (
-				<PostCard post={post} />
-			))}
-		</div>
+		<BentoGrid posts={sortedPosts} />
 	</section>
 </BaseLayout>

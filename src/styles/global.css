@@ -2,7 +2,14 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-	--font-sans: 'Inter', system-ui, sans-serif;
+	--font-sans: 'Outfit', 'Inter', system-ui, sans-serif;
 	--color-primary: #2563eb;
 	--color-accent: #7c3aed;
+	--radius-bento: 1.5rem;
+}
+
+@layer base {
+	body {
+		@apply font-sans;
+	}
 }

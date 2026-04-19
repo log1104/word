@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PostCard from '../components/PostCard.astro';
+import BentoGrid from '../components/BentoGrid.astro';
 import { getCollection } from 'astro:content';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 
@@ -10,14 +10,18 @@ const posts = (await getCollection('posts', ({ data }) => !data.draft))
 ---
 
 <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
-	<section>
-		<h1 class="text-4xl font-bold mb-8">Latest Posts</h1>
+	<section class="mb-12">
+		<div class="max-w-2xl">
+			<h1 class="text-4xl sm:text-5xl font-bold mb-4 bg-linear-to-r from-primary to-accent bg-clip-text text-transparent">
+				{SITE_TITLE}
+			</h1>
+			<p class="text-lg text-gray-600 dark:text-gray-400 mb-8">
+				Exploring the depths of the Word. Dive into studies, reflections, and insights designed for the modern Berean.
+			</p>
+		</div>
+		
 		{posts.length > 0 ? (
-			<div class="grid gap-6">
-				{posts.map((post) => (
-					<PostCard post={post} />
-				))}
-			</div>
+			<BentoGrid posts={posts} />
 		) : (
 			<p class="text-gray-500 dark:text-gray-400">No posts yet. Check back soon.</p>
 		)}
