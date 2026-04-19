@@ -19,19 +19,19 @@ const { post, variant = 'standard' } = Astro.props;
 // Calculate reading time (roughly 200 words per minute)
 // Since we don't have the body here, we'll just show the category or a small detail
 const categoryColors: Record<string, string> = {
-	study: 'from-blue-500/20 to-indigo-500/20',
-	news: 'from-emerald-500/20 to-teal-500/20',
-	reflection: 'from-purple-500/20 to-pink-500/20',
-	uncategorized: 'from-gray-500/20 to-slate-500/20'
+	study: 'from-blue-500/30 to-indigo-500/30',
+	news: 'from-emerald-500/30 to-teal-500/30',
+	reflection: 'from-purple-500/30 to-pink-500/30',
+	uncategorized: 'from-gray-500/30 to-slate-500/30'
 };
 
 const bgGradient = categoryColors[post.data.category] || categoryColors.uncategorized;
 
 const cardClasses = {
-	hero: 'col-span-1 sm:col-span-2 row-span-2 min-h-[400px]',
-	tall: 'col-span-1 row-span-2 min-h-[400px]',
-	wide: 'col-span-1 sm:col-span-2 row-span-1 min-h-[200px]',
-	standard: 'col-span-1 row-span-1 min-h-[200px]'
+	hero: 'col-span-1 sm:col-span-2 row-span-2 min-h-[250px] sm:min-h-[400px]',
+	tall: 'col-span-1 row-span-2 min-h-[250px] sm:min-h-[400px]',
+	wide: 'col-span-1 sm:col-span-2 row-span-1 min-h-[180px] sm:min-h-[200px]',
+	standard: 'col-span-1 row-span-1 min-h-[180px] sm:min-h-[200px]'
 };
 ---
 
@@ -56,7 +56,7 @@ const cardClasses = {
 			<div class:list={[
 				'absolute inset-0 bg-linear-to-br transition-opacity duration-700 group-hover:opacity-80',
 				bgGradient
-			]}></div>
+			]} style="background-image: linear-gradient(var(--tw-gradient-stops)), url(&quot;data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E&quot;);"></div>
 		)}
 
 		<div class:list={[
@@ -100,7 +100,7 @@ const cardClasses = {
 				</p>
 			)}
 
-			<div class="mt-auto pt-4 flex items-center justify-between opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+			<div class="mt-auto pt-4 flex items-center justify-between opacity-100 sm:opacity-0 sm:translate-y-2 sm:group-hover:opacity-100 sm:group-hover:translate-y-0 transition-all duration-300">
 				<span class:list={['text-sm font-medium', variant === 'hero' ? 'text-white' : 'text-primary']}>
 					Read More
 				</span>

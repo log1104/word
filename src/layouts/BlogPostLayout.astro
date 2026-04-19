@@ -20,34 +20,36 @@ const url = Astro.url.toString();
 <BaseLayout title={title} description={description} image={heroImage} pubDate={pubDate}>
 	<article>
 		{heroImage && <img src={heroImage} alt={title} class="rounded-lg w-full mb-6" />}
-		<header class="mb-8">
-			<div class="flex justify-between items-start mb-2">
-				<p class="text-sm text-gray-500 dark:text-gray-400">
-					{category && (
-						<a href={`/categories/${category}`} class="text-primary hover:underline">{category}</a>
-					)}
-					&middot;{' '}
-					<time datetime={pubDate.toISOString()}>
-						{pubDate.toLocaleDateString('en-GB')}
-					</time>
-					{updatedDate && (
-						<> (Updated: {updatedDate.toLocaleDateString('en-GB')})</>
-					)}
-				</p>
-				<ShareButton title={title} url={url} />
-			</div>
-			<h1 class="text-4xl font-bold mb-4">{title}</h1>
-			<p class="text-lg text-gray-600 dark:text-gray-400 mb-4">{description}</p>
-			{tags && tags.length > 0 && <TagList tags={tags} />}
-		</header>
+		<div class="max-w-[65ch] mx-auto">
+			<header class="mb-8">
+				<div class="flex justify-between items-start mb-2">
+					<p class="text-sm text-gray-500 dark:text-gray-400">
+						{category && (
+							<a href={`/categories/${category}`} class="text-primary hover:underline">{category}</a>
+						)}
+						&middot;{' '}
+						<time datetime={pubDate.toISOString()}>
+							{pubDate.toLocaleDateString('en-GB')}
+						</time>
+						{updatedDate && (
+							<> (Updated: {updatedDate.toLocaleDateString('en-GB')})</>
+						)}
+					</p>
+					<ShareButton title={title} url={url} />
+				</div>
+				<h1 class="text-4xl font-bold mb-4">{title}</h1>
+				<p class="text-lg text-gray-600 dark:text-gray-400 mb-4">{description}</p>
+				{tags && tags.length > 0 && <TagList tags={tags} />}
+			</header>
 
-		<div class="prose prose-lg dark:prose-invert max-w-none mb-12">
-			<slot />
+			<div class="prose prose-lg dark:prose-invert mb-12">
+				<slot />
+			</div>
+			<footer class="border-t border-gray-200 dark:border-gray-800 pt-8 flex flex-col items-center gap-4">
+				<p class="text-gray-600 dark:text-gray-400 font-medium">Enjoyed this post? Share it with others!</p>
+				<ShareButton title={title} url={url} />
+			</footer>
 		</div>
-		<footer class="border-t border-gray-200 dark:border-gray-800 pt-8 flex flex-col items-center gap-4">
-			<p class="text-gray-600 dark:text-gray-400 font-medium">Enjoyed this post? Share it with others!</p>
-			<ShareButton title={title} url={url} />
-		</footer>
 	</article>
 </BaseLayout>
 

@@ -2,7 +2,9 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-	--font-sans: 'Outfit', 'Inter', system-ui, sans-serif;
+	--font-body: 'Inter', system-ui, sans-serif;
+	--font-heading: 'Outfit', system-ui, sans-serif;
+	--font-sans: var(--font-body);
 	--color-primary: #2563eb;
 	--color-accent: #7c3aed;
 	--radius-bento: 1.5rem;
@@ -10,6 +12,10 @@
 
 @layer base {
 	body {
-		@apply font-sans;
+		font-family: var(--font-body);
+	}
+
+	h1, h2, h3, h4, h5, h6 {
+		font-family: var(--font-heading);
 	}
 }
