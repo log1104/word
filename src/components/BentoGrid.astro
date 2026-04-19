@@ -6,31 +6,9 @@ interface Props {
 }
 
 const { posts } = Astro.props;
-
-/**
- * Bento Grid Pattern (repeats every 5 posts):
- * 0: Hero (2x2)
- * 1: Standard (1x1)
- * 2: Tall (1x2)
- * 3: Standard (1x1)
- * 4: Wide (2x1)
- */
-const getVariant = (index: number) => {
-	const patternIndex = index % 5;
-	switch (patternIndex) {
-		case 0: return 'hero';
-		case 2: return 'tall';
-		case 4: return 'wide';
-		default: return 'standard';
-	}
-};
 ---
-
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[200px]">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 	{posts.map((post, index) => (
-		<BentoTile 
-			post={post} 
-			variant={getVariant(index)} 
-		/>
+		<BentoTile post={post} index={index} />
 	))}
 </div>

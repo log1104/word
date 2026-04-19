@@ -10,12 +10,7 @@ const pathname = new URL(Astro.request.url).pathname;
 			{SITE_TITLE}
 		</a>
 		<div class="flex items-center gap-6">
-			<a href="/" class:list={['text-sm font-medium hover:text-primary transition-colors', pathname === '/' ? 'text-primary' : 'text-gray-600 dark:text-gray-400']}>
-				Home
-			</a>
-			<a href="/blog" class:list={['text-sm font-medium hover:text-primary transition-colors', pathname.startsWith('/blog') ? 'text-primary' : 'text-gray-600 dark:text-gray-400']}>
-				Blog
-			</a>
+
 			<a href="/tags" class:list={['text-sm font-medium hover:text-primary transition-colors', pathname.startsWith('/tags') ? 'text-primary' : 'text-gray-600 dark:text-gray-400']}>
 				Tags
 			</a>

@@ -2,20 +2,52 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-	--font-body: 'Inter', system-ui, sans-serif;
+	--font-sans: 'Inter', system-ui, sans-serif;
 	--font-heading: 'Outfit', system-ui, sans-serif;
-	--font-sans: var(--font-body);
 	--color-primary: #2563eb;
 	--color-accent: #7c3aed;
-	--radius-bento: 1.5rem;
+	--radius-bento: 1rem;
+
+	/* Liturgical Palette Tokens */
+	--bento-study-bg:        #1a0a2e;  /* Deep Royal Purple */
+	--bento-study-accent:    #a78bfa;  /* Muted Violet */
+	--bento-study-glow:      rgba(139,92,246,0.2);
+
+	--bento-reflection-bg:   #1c0a0a;  /* Deep Burgundy */
+	--bento-reflection-accent: #f87171;/* Muted Rose */
+	--bento-reflection-glow: rgba(239,68,68,0.18);
+
+	--bento-news-bg:         #071a0f;  /* Forest Night */
+	--bento-news-accent:     #6ee7b7;  /* Sage Mint */
+	--bento-news-glow:       rgba(52,211,153,0.18);
+
+	--bento-default-bg:      #0e1120;  /* Slate Navy */
+	--bento-default-accent:  #94a3b8;  /* Cool Slate */
+	--bento-default-glow:    rgba(148,163,184,0.15);
 }
 
 @layer base {
 	body {
-		font-family: var(--font-body);
+		@apply font-sans text-gray-800 dark:text-gray-300;
 	}
-
-	h1, h2, h3, h4, h5, h6 {
+	h1, h2, h3, h4, h5, h6, .font-heading {
 		font-family: var(--font-heading);
+	}
+}
+
+@layer components {
+	/* Bento Card - shared noise texture via pseudo-element */
+	.bento-card {
+		position: relative;
+		overflow: hidden;
+	}
+	.bento-card::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+		opacity: 0.04;
+		z-index: 1;
 	}
 }
