@@ -45,10 +45,6 @@ const url = Astro.url.toString();
 			<div class="prose prose-lg dark:prose-invert mb-12">
 				<slot />
 			</div>
-			<footer class="border-t border-gray-200 dark:border-gray-800 pt-8 flex flex-col items-center gap-4">
-				<p class="text-gray-600 dark:text-gray-400 font-medium">Enjoyed this post? Share it with others!</p>
-				<ShareButton title={title} url={url} />
-			</footer>
 		</div>
 	</article>
 </BaseLayout>
