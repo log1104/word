@@ -55,7 +55,18 @@ npm run preview      # Preview build locally
 - GitHub repo: `log1104/word`
 - Cloudflare Pages project: `word`
 - Custom domain: `word.247base.uk`
-- Manual deploy: `npx wrangler pages deploy dist --project-name word`
+
+### Standard: GitHub auto-deploy
+
+Push to `main` triggers Cloudflare Pages auto-build and deploy. This is the only deployment path — both code changes and Sveltia CMS edits go through GitHub.
+
+```bash
+git add <files>
+git commit -m "type: description"
+git push origin main
+```
+
+**Never use `wrangler pages deploy`** — it creates a manual deployment that gets overwritten by the next CMS-triggered auto-deploy.
 
 ## Conventions
 
