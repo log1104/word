@@ -7,12 +7,14 @@ interface Props {
 			description: string;
 			pubDate: Date;
 			category: string;
+			heroImage?: string;
 		};
 	};
 	index?: number;
 }
 
 const { post, index = 0 } = Astro.props;
+const hasImage = !!post.data.heroImage;
 
 // Liturgical palette mapped to CSS variable tokens defined in global.css
 type CategoryKey = 'study' | 'news' | 'reflection' | 'default';
@@ -38,62 +40,84 @@ const cardStyle = [
 ---
 
 <article
-	class="bento-card group relative rounded-[--radius-bento] border min-h-[260px] flex flex-col p-6 transition-all duration-300 bento-article"
+	class="bento-card group relative rounded-[--radius-bento] border min-h-[260px] flex flex-col overflow-hidden transition-all duration-300 bento-article"
 	style={cardStyle}
 >
 	<a href={`/blog/${post.id}/`} class="relative z-10 flex flex-col h-full w-full">
 
-		<!-- Z-Pattern Row 1: Icon ghost-button + Category label + Date -->
-		<div class="flex items-center gap-3 mb-5">
-			<!-- Ghost icon badge -->
-			<div
-				class="w-7 h-7 flex items-center justify-center rounded text-xs font-bold uppercase flex-shrink-0"
-				style="border: 1px solid var(--accent); color: var(--accent);"
-			>
-				{post.data.category.charAt(0)}
-			</div>
-			<span class="text-xs font-semibold tracking-widest uppercase" style="color: var(--accent); opacity: 0.8;">
-				{post.data.category}
-			</span>
-			<time
-				datetime={post.data.pubDate.toISOString()}
-				class="ml-auto text-xs text-slate-500 dark:text-slate-500 tabular-nums"
-			>
-				{post.data.pubDate.toLocaleDateString('en-GB')}
-			</time>
+		<!-- Card header: hero image or placeholder icon -->
+		<div class="bento-header aspect-video w-full relative overflow-hidden">
+			{hasImage ? (
+				<img
+					src={post.data.heroImage}
+					alt=""
+					loading="lazy"
+					decoding="async"
+					class="w-full h-full object-cover"
+				/>
+			) : (
+				<div class="w-full h-full flex items-center justify-center" style={`background: color-mix(in srgb, ${tokens.accent} 8%, transparent);`}>
+					<span class="material-symbols-outlined bento-placeholder-icon" style={`color: ${tokens.accent}; opacity: 0.35;`}>
+						auto_stories
+					</span>
+				</div>
+			)}
 		</div>
 
-		<!-- Z-Pattern Row 2: Title (high contrast hook) -->
-		<h2 class="font-heading font-bold text-xl leading-snug text-gray-100 mb-3">
-			{post.data.title}
-		</h2>
+		<!-- Card body -->
+		<div class="flex flex-col flex-1 p-6">
+			<!-- Z-Pattern Row 1: Icon ghost-button + Category label + Date -->
+			<div class="flex items-center gap-3 mb-5">
+				<!-- Ghost icon badge -->
+				<div
+					class="w-7 h-7 flex items-center justify-center rounded text-xs font-bold uppercase flex-shrink-0"
+					style="border: 1px solid var(--accent); color: var(--accent);"
+				>
+					{post.data.category.charAt(0)}
+				</div>
+				<span class="text-xs font-semibold tracking-widest uppercase" style="color: var(--accent); opacity: 0.8;">
+					{post.data.category}
+				</span>
+				<time
+					datetime={post.data.pubDate.toISOString()}
+					class="ml-auto text-xs text-slate-500 dark:text-slate-500 tabular-nums"
+				>
+					{post.data.pubDate.toLocaleDateString('en-GB')}
+				</time>
+			</div>
 
-		<!-- Z-Pattern Row 3: Excerpt (dimmed) -->
-		{post.data.description && (
-			<p class="text-sm leading-relaxed line-clamp-3 text-slate-400">
-				{post.data.description}
-			</p>
-		)}
+			<!-- Z-Pattern Row 2: Title (high contrast hook) -->
+			<h2 class="font-heading font-bold text-xl leading-snug text-gray-100 mb-3">
+				{post.data.title}
+			</h2>
 
-		<!-- Z-Pattern Row 4: Arrow CTA — bottom-right, hover reveal -->
-		<div class="mt-auto pt-5 flex justify-end">
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				width="20"
-				height="20"
-				viewBox="0 0 24 24"
-				fill="none"
-				stroke="currentColor"
-				stroke-width="2"
-				stroke-linecap="round"
-				stroke-linejoin="round"
-				class="transition-all duration-300 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0"
-				style="color: var(--accent);"
-				aria-label="Read post"
-			>
-				<line x1="7" y1="17" x2="17" y2="7"/>
-				<polyline points="7 7 17 7 17 17"/>
-			</svg>
+			<!-- Z-Pattern Row 3: Excerpt (dimmed) -->
+			{post.data.description && (
+				<p class="text-sm leading-relaxed line-clamp-3 text-slate-400">
+					{post.data.description}
+				</p>
+			)}
+
+			<!-- Z-Pattern Row 4: Arrow CTA — bottom-right, hover reveal -->
+			<div class="mt-auto pt-5 flex justify-end">
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="20"
+					height="20"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					class="transition-all duration-300 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0"
+					style="color: var(--accent);"
+					aria-label="Read post"
+				>
+					<line x1="7" y1="17" x2="17" y2="7"/>
+					<polyline points="7 7 17 7 17 17"/>
+				</svg>
+			</div>
 		</div>
 
 	</a>
@@ -106,5 +130,14 @@ const cardStyle = [
 	}
 	.bento-article:hover {
 		border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+	}
+	.bento-header img {
+		transition: transform 0.4s ease;
+	}
+	.bento-article:hover .bento-header img {
+		transform: scale(1.04);
+	}
+	.bento-placeholder-icon {
+		font-size: 3rem;
 	}
 </style>
