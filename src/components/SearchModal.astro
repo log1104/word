@@ -1,0 +1,200 @@
+---
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('posts', ({ data }) => !data.draft);
+const categoryMap = new Map<string, number>();
+const tagMap = new Map<string, { display: string; count: number }>();
+
+for (const post of posts) {
+	const cat = post.data.category;
+	if (cat) {
+		categoryMap.set(cat, (categoryMap.get(cat) ?? 0) + 1);
+	}
+	
+	if (post.data.tags) {
+		for (const tag of post.data.tags) {
+			const slug = tag.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+			const existing = tagMap.get(slug);
+			if (existing) {
+				existing.count += 1;
+			} else {
+				tagMap.set(slug, { display: tag, count: 1 });
+			}
+		}
+	}
+}
+
+const categories = [...categoryMap.entries()].sort((a, b) => b[1] - a[1]);
+const tags = [...tagMap.entries()]
+	.map(([slug, data]) => ({ slug, ...data }))
+	.sort((a, b) => b.count - a.count);
+---
+
+<dialog id="search-modal" class="backdrop:bg-black/50 bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-0 w-full max-w-2xl border border-gray-200 dark:border-gray-800 m-auto mt-20 sm:mt-32">
+	<div class="p-4 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between">
+		<h2 class="text-lg font-bold">Search / Explore</h2>
+		<button id="close-search" class="text-gray-500 hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary rounded-full p-1" aria-label="Close search">
+			<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+		</button>
+	</div>
+	
+	<div class="p-6 max-h-[60vh] overflow-y-auto">
+		<!-- Search Input -->
+		<div class="mb-6 relative">
+			<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
+				<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+			</div>
+			<input type="text" id="search-input" placeholder="Search categories and tags..." class="w-full bg-gray-50 dark:bg-gray-950 border border-gray-200 dark:border-gray-800 rounded-lg pl-10 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-gray-900 dark:text-gray-100" />
+		</div>
+
+		<div id="search-results">
+			{categories.length > 0 && (
+				<div class="mb-8 search-section" id="categories-section">
+					<h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">Categories</h3>
+					<div class="grid gap-3 sm:grid-cols-2">
+						{categories.map(([category, count]) => (
+							<a
+								href={`/categories/${category}`}
+								class="search-item block rounded-md border border-gray-100 dark:border-gray-800 p-3 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+								data-title={category.toLowerCase()}
+								data-type="category"
+							>
+								<div class="flex items-center justify-between">
+									<span class="font-medium capitalize">{category}</span>
+									<span class="text-xs text-gray-500">{count}</span>
+								</div>
+							</a>
+						))}
+					</div>
+				</div>
+			)}
+
+			{tags.length > 0 && (
+				<div class="search-section" id="tags-section">
+					<h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">Tags</h3>
+					<div class="flex flex-wrap gap-2">
+						{tags.map(({ slug, display, count }) => (
+							<a
+								href={`/tags/${slug}`}
+								class="search-item inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-colors text-sm font-medium"
+								data-title={display.toLowerCase()}
+								data-type="tag"
+							>
+								#{display}
+								<span class="text-xs opacity-75">({count})</span>
+							</a>
+						))}
+					</div>
+				</div>
+			)}
+			
+			<div id="no-results" class="hidden text-center py-8 text-gray-500">
+				No tags or categories found matching "<span id="search-query-display"></span>".
+			</div>
+		</div>
+	</div>
+</dialog>
+
+<script>
+	function setupSearch() {
+		const searchModal = document.getElementById('search-modal') as HTMLDialogElement;
+		const closeSearchBtn = document.getElementById('close-search');
+		const searchInput = document.getElementById('search-input') as HTMLInputElement;
+		const searchItems = document.querySelectorAll('.search-item');
+		const categoriesSection = document.getElementById('categories-section');
+		const tagsSection = document.getElementById('tags-section');
+		const noResults = document.getElementById('no-results');
+		const searchQueryDisplay = document.getElementById('search-query-display');
+		const openBtn = document.getElementById('open-search');
+
+		if (openBtn && searchModal && !openBtn.hasAttribute('data-search-initialized')) {
+			openBtn.addEventListener('click', () => {
+				searchModal.showModal();
+				setTimeout(() => searchInput?.focus(), 50);
+			});
+			openBtn.setAttribute('data-search-initialized', 'true');
+		}
+
+		if (closeSearchBtn && searchModal && !closeSearchBtn.hasAttribute('data-search-initialized')) {
+			closeSearchBtn.addEventListener('click', () => {
+				searchModal.close();
+			});
+			closeSearchBtn.setAttribute('data-search-initialized', 'true');
+		}
+
+		if (searchModal && !searchModal.hasAttribute('data-search-initialized')) {
+			searchModal.addEventListener('click', (e) => {
+				const dialogDimensions = searchModal.getBoundingClientRect();
+				if (
+					e.clientX < dialogDimensions.left ||
+					e.clientX > dialogDimensions.right ||
+					e.clientY < dialogDimensions.top ||
+					e.clientY > dialogDimensions.bottom
+				) {
+					searchModal.close();
+				}
+			});
+			searchModal.setAttribute('data-search-initialized', 'true');
+		}
+
+		if (searchInput && !searchInput.hasAttribute('data-search-initialized')) {
+			searchInput.addEventListener('input', (e) => {
+				const query = (e.target as HTMLInputElement).value.toLowerCase();
+				let visibleCategories = 0;
+				let visibleTags = 0;
+
+				searchItems.forEach(item => {
+					const title = item.getAttribute('data-title') || '';
+					const type = item.getAttribute('data-type');
+					const isMatch = title.includes(query);
+
+					if (isMatch) {
+						(item as HTMLElement).style.display = type === 'category' ? 'block' : 'inline-flex';
+						if (type === 'category') visibleCategories++;
+						if (type === 'tag') visibleTags++;
+					} else {
+						(item as HTMLElement).style.display = 'none';
+					}
+				});
+
+				if (categoriesSection) categoriesSection.style.display = visibleCategories > 0 ? 'block' : 'none';
+				if (tagsSection) tagsSection.style.display = visibleTags > 0 ? 'block' : 'none';
+				
+				if (noResults && searchQueryDisplay) {
+					if (visibleCategories === 0 && visibleTags === 0) {
+						noResults.classList.remove('hidden');
+						searchQueryDisplay.textContent = query;
+					} else {
+						noResults.classList.add('hidden');
+					}
+				}
+			});
+			searchInput.setAttribute('data-search-initialized', 'true');
+		}
+	}
+
+	document.addEventListener('DOMContentLoaded', setupSearch);
+	document.addEventListener('astro:page-load', setupSearch);
+</script>
+
+<style>
+	dialog::backdrop {
+		background: rgba(17, 24, 39, 0.7);
+		backdrop-filter: blur(4px);
+	}
+	
+	dialog[open] {
+		animation: slide-down 0.2s ease-out;
+	}
+	
+	@keyframes slide-down {
+		from {
+			opacity: 0;
+			transform: translateY(-20px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+</style>

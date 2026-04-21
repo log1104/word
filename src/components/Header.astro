@@ -1,5 +1,6 @@
 ---
 import { SITE_TITLE } from '../consts';
+import SearchModal from './SearchModal.astro';
 
 const pathname = new URL(Astro.request.url).pathname;
 ---
@@ -11,16 +12,14 @@ const pathname = new URL(Astro.request.url).pathname;
 			{SITE_TITLE}
 		</a>
 		<div class="flex items-center gap-6">
-
-			<a href="/tags" class:list={['text-sm font-medium hover:text-primary transition-colors', pathname.startsWith('/tags') ? 'text-primary' : 'text-gray-600 dark:text-gray-400']}>
-				Tags
-			</a>
-			<a href="/categories" class:list={['text-sm font-medium hover:text-primary transition-colors', pathname.startsWith('/categories') ? 'text-primary' : 'text-gray-600 dark:text-gray-400']}>
-				Categories
-			</a>
+			<button id="open-search" class="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary transition-colors focus:outline-none flex items-center gap-1.5" aria-label="Search">
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+				Search
+			</button>
 			<a href="/about" class:list={['text-sm font-medium hover:text-primary transition-colors', pathname === '/about' ? 'text-primary' : 'text-gray-600 dark:text-gray-400']}>
 				About
 			</a>
 		</div>
 	</nav>
+	<SearchModal />
 </header>
