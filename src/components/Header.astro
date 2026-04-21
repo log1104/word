@@ -16,10 +16,76 @@ const pathname = new URL(Astro.request.url).pathname;
 				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
 				Search
 			</button>
-			<a href="/about" class:list={['text-sm font-medium hover:text-primary transition-colors', pathname === '/about' ? 'text-primary' : 'text-gray-600 dark:text-gray-400']}>
-				About
-			</a>
+			<button id="open-menu" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors focus:outline-none" aria-label="Menu">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+			</button>
 		</div>
 	</nav>
+
+	<!-- Slide-out Menu Backdrop -->
+	<div id="menu-backdrop" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 opacity-0 pointer-events-none transition-opacity duration-300"></div>
+
+	<!-- Slide-out Menu -->
+	<div id="slide-menu" class="fixed top-0 right-0 h-full w-64 bg-white dark:bg-gray-950 border-l border-gray-200 dark:border-gray-800 shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col">
+		<div class="p-4 border-b border-gray-200 dark:border-gray-800 flex justify-end">
+			<button id="close-menu" class="text-gray-500 hover:text-primary transition-colors focus:outline-none p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800" aria-label="Close menu">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+			</button>
+		</div>
+		<nav class="flex flex-col p-4 gap-2">
+			<a href="/about" class:list={['px-4 py-3 rounded-lg text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors', pathname === '/about' ? 'text-primary bg-primary/5 dark:bg-primary/10' : 'text-gray-700 dark:text-gray-300']}>
+				<div class="flex items-center gap-3">
+					<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+					About
+				</div>
+			</a>
+			<a href="https://word.247base.uk/admin" target="_blank" rel="noopener noreferrer" class="px-4 py-3 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors">
+				<div class="flex items-center gap-3">
+					<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></svg>
+					Admin
+				</div>
+			</a>
+		</nav>
+	</div>
+
 	<SearchModal />
 </header>
+
+<script>
+	function setupMenu() {
+		const openBtn = document.getElementById('open-menu');
+		const closeBtn = document.getElementById('close-menu');
+		const slideMenu = document.getElementById('slide-menu');
+		const backdrop = document.getElementById('menu-backdrop');
+
+		if (openBtn && !openBtn.hasAttribute('data-menu-init')) {
+			openBtn.addEventListener('click', () => {
+				slideMenu?.classList.remove('translate-x-full');
+				backdrop?.classList.remove('opacity-0', 'pointer-events-none');
+				backdrop?.classList.add('opacity-100', 'pointer-events-auto');
+				document.body.style.overflow = 'hidden';
+			});
+			openBtn.setAttribute('data-menu-init', 'true');
+		}
+
+		function closeMenu() {
+			slideMenu?.classList.add('translate-x-full');
+			backdrop?.classList.remove('opacity-100', 'pointer-events-auto');
+			backdrop?.classList.add('opacity-0', 'pointer-events-none');
+			document.body.style.overflow = '';
+		}
+
+		if (closeBtn && !closeBtn.hasAttribute('data-menu-init')) {
+			closeBtn.addEventListener('click', closeMenu);
+			closeBtn.setAttribute('data-menu-init', 'true');
+		}
+
+		if (backdrop && !backdrop.hasAttribute('data-menu-init')) {
+			backdrop.addEventListener('click', closeMenu);
+			backdrop.setAttribute('data-menu-init', 'true');
+		}
+	}
+
+	document.addEventListener('DOMContentLoaded', setupMenu);
+	document.addEventListener('astro:page-load', setupMenu);
+</script>
