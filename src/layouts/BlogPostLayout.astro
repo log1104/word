@@ -19,7 +19,18 @@ const url = Astro.url.toString();
 
 <BaseLayout title={title} description={description} image={heroImage} pubDate={pubDate}>
 	<article>
-		{heroImage && <img src={heroImage} alt={title} class="rounded-lg w-full mb-6" />}
+		{heroImage && (
+			<img
+				src={heroImage}
+				alt={title}
+				width={1200}
+				height={630}
+				loading="eager"
+				decoding="async"
+				class="rounded-lg w-full mb-6 object-cover"
+				style="max-height: 24rem;"
+			/>
+		)}
 		<div class="max-w-[65ch] mx-auto">
 			<header class="mb-8">
 				<div class="flex justify-between items-start mb-2">
