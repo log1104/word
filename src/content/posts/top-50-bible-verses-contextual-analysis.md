@@ -29,8 +29,7 @@ _God grants strength to the remnant to endure judgment, not to the individual to
 _Peace (Shalom) is the result of right order and submission, not a detached emotional state._
 
 | **Reference** | **Verse Excerpt** | **Popular Interpretation** | **Contextual Reality (The Warning)** |
-| Reference | Verse Excerpt | Popular Interpretation | Contextual Reality (The Warning) |
-| :--- | :--- | :--- | :--- |
+| --- | --- | --- | --- |
 | **Philippians 4:6-7** | "Do not be anxious about anything, but in every situation..." | Pray and the stress vanishes. | The peace "guards" the heart *while* the external crisis continues to exist. |
 | **1 Peter 5:7** | "Cast all your anxiety on him because he cares for you." | Handing off worries to God. | Verse 8 warns that the **Devil is a roaring lion**. Sobriety and vigilance are required. |
 | **Matthew 11:28** | "Come to me, all you who are weary and burdened..." | Rest from a busy schedule. | Jesus is offering a **different yoke**. It is still a life of labor, just under a different King. |
@@ -44,7 +43,7 @@ _Peace (Shalom) is the result of right order and submission, not a detached emot
 _The protection of the Covenant often involves the pruning of the individual._
 
 | **Reference** | **Verse Excerpt** | **Popular Interpretation** | **Contextual Reality (The Warning)** |
-| :--- | :--- | :--- | :--- |
+| --- | --- | --- | --- |
 | **Psalm 23:4** | "Even though I walk through the darkest valley..." | I am safe from physical harm. | The "Rod and Staff" are for **discipline and correction**. The threat is real and present. |
 | **Romans 8:28** | "...in all things God works for the good of those who love him." | Everything turns out fine. | The "good" is being **conformed to Christ**, who was a "man of sorrows." |
 | **Psalm 91:11** | "For he will command his angels concerning you to guard you..." | Protection from accidents/harm. | Satan quoted this to Jesus as a **temptation**. It assumes a life of high-stakes danger. |
@@ -58,7 +57,7 @@ _The protection of the Covenant often involves the pruning of the individual._
 _The "Day of the Lord" is a warning of darkness and judgment for the unprepared._
 
 | **Reference** | **Verse Excerpt** | **Popular Interpretation** | **Contextual Reality (The Warning)** |
-| :--- | :--- | :--- | :--- |
+| --- | --- | --- | --- |
 | **Matthew 24:6** | "You will hear of wars and rumors of wars... see to it that you are not alarmed." | News headlines mean the end. | Jesus calls this "the beginning of birth pains." He warns: **"See to it that you are not alarmed."** |
 | **Revelation 21:4** | "‘He will wipe every tear from their eyes. There will be no more death’..." | Heaven will be nice. | This happens **after** the destruction of the current universe and a final judgment. |
 | **Matthew 6:33** | "But seek first his kingdom... and all these things will be given to you." | God provides money/needs. | A warning against being consumed by **the worries of this life** (the "End Times" spirit). |
@@ -72,7 +71,7 @@ _The "Day of the Lord" is a warning of darkness and judgment for the unprepared.
 _Grace is the power to obey, not the permission to remain in sin._
 
 | **Reference** | **Verse Excerpt** | **Popular Interpretation** | **Contextual Reality (The Warning)** |
-| :--- | :--- | :--- | :--- |
+| --- | --- | --- | --- |
 | **John 3:16** | "For God so loved the world that he gave his one and only Son..." | Free ticket to heaven. | Verse 19: The verdict is that people **loved darkness** and will be condemned for it. |
 | **Ephesians 2:8** | "For it is by grace you have been saved, through faith..." | No effort or work required. | Verse 10: We are saved specifically **to perform good works** prepared by God. |
 | **Romans 3:23** | "...for all have sinned and fall short of the glory of God." | Everyone makes mistakes. | "Fall short" is a legal status of **treason**. It denotes a state of being an enemy. |
@@ -87,7 +86,7 @@ _Grace is the power to obey, not the permission to remain in sin._
 _Wisdom requires the total abandonment of human "understanding" and logic._
 
 | **Reference** | **Verse Excerpt** | **Popular Interpretation** | **Contextual Reality (The Warning)** |
-| :--- | :--- | :--- | :--- |
+| --- | --- | --- | --- |
 | **Proverbs 3:5** | "Trust in the Lord with all your heart and lean not on your own understanding..." | God will lead me. | Your own intuition is explicitly labeled as **deceptive and unreliable**. |
 | **Jeremiah 29:11** | "'For I know the plans I have for you,' declares the Lord..." | God has a "dream" for me. | Written to people being sent into **70 years of slavery**. The "prosper" is national, not personal. |
 | **James 1:5** | "If any of you lacks wisdom, you should ask God..." | Get advice for my plan. | The "double-minded" man who doesn't intend to obey will **receive nothing**. |
@@ -101,7 +100,7 @@ _Wisdom requires the total abandonment of human "understanding" and logic._
 _Faith is a long-term endurance of the cross, involving the death of the self._
 
 | **Reference** | **Verse Excerpt** | **Popular Interpretation** | **Contextual Reality (The Warning)** |
-| :--- | :--- | :--- | :--- |
+| --- | --- | --- | --- |
 | **Romans 12:2** | "Do not conform to the pattern of this world, but be transformed..." | Be a little different. | A **total cognitive overhaul**. It results in being a social pariah to the "pattern of the world." |
 | **James 1:2** | "Consider it pure joy... whenever you face trials..." | Be happy when stressed. | Trials are the **testing of the metal**. The goal is to be "lacking nothing" after being broken. |
 | **Galatians 2:20** | "I have been crucified with Christ and I no longer live..." | I'm a new person. | Crucifixion is **agonizing**. The "old self" has to be executed daily. |
