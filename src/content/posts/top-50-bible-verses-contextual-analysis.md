@@ -16,7 +16,7 @@ _God grants strength to the remnant to endure judgment, not to the individual to
 
 | Reference | Verse Excerpt | Popular Interpretation | Contextual Reality (The Warning) |
 | --- | --- | --- | --- |
-| **Isaiah 41:10** | "So do not fear, for I am with you; do not be dismayed..." | God helps with daily personal struggles. | Spoken to a nation in exile; God is "with them" during a national catastrophe caused by their own sin. |
+| [**Isaiah 41:10**](https://bible-xref.247base.uk/Isaiah/41/10) | "So do not fear, for I am with you; do not be dismayed..." | God helps with daily personal struggles. | Spoken to a nation in exile; God is "with them" during a national catastrophe caused by their own sin. |
 | **Philippians 4:13** | "I can do all things through Christ who strengthens me." | Achieving any personal goal or milestone. | Paul is in prison and hungry. The strength is for **enduring humiliation** and lack. |
 | **Joshua 1:9** | "Have I not commanded you? Be strong and courageous..." | Bravery for new jobs or life moves. | A military command for conquest. Success was **conditional** on total adherence to the Law. |
 | **Isaiah 40:31** | "...but those who hope in the Lord will renew their strength." | Getting an energy boost for the weary. | Addressed to an "ignored" people. Strength is for **waiting out** a 70-year exile. |
